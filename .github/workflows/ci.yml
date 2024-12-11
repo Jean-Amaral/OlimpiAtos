@@ -25,5 +25,6 @@ jobs:
 
     - name: Deploy to local path
       run: |
-        mkdir -p D:\\OlimpiAtos\\Production 
-        rsync -av --exclude='D:\\OlimpiAtos\\Production' . D:\\OlimpiAtos\\Production
+        mkdir -p D:\\OlimpiAtos\\Production
+        robocopy . D:\\OlimpiAtos\\Production /MIR /XD D:\\OlimpiAtos\\Production
+    
