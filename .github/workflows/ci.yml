@@ -31,4 +31,3 @@ jobs:
         script: |
           mkdir -p "D:\\OlimpiAtos\\Production"
           rsync -avz -e ssh . "${{ secrets.WINDOWS_SSH_USERNAME }}@${{ secrets.WINDOWS_SSH_HOST }}:D:\\OlimpiAtos\\Production"
-          
