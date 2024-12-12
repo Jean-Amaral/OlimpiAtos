@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -23,8 +22,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Deploy to local path
-      run: |
-        mkdir -p D:\\OlimpiAtos\\Production
-        robocopy . D:\\OlimpiAtos\\Production /MIR /XD D:\\OlimpiAtos\\Production
-    
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.WINDOWS_SSH_HOST }} # Endereço IP ou nome da sua máquina Windows
+        username: ${{ secrets.WINDOWS_SSH_USERNAME }} # Seu nome de usuário na máquina Windows
+        key: ${{ secrets.WINDOWS_SSH_KEY }} # Sua chave SSH privada (como um segredo do GitHub)
+        script: |
+          mkdir -p "D:\\OlimpiAtos\\Production"
+          rsync -avz -e ssh . "${{ secrets.WINDOWS_SSH_USERNAME }}@${{ secrets.WINDOWS_SSH_HOST }}:D:\\OlimpiAtos\\Production"
